@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.school.scheduling.mapper.CourseMapper">
+    <resultMap id="BaseResultMap" type="com.school.scheduling.entity.Course">
+        <id column="id" property="id"/>
+        <result column="course_name" property="courseName"/>
+        <result column="course_code" property="courseCode"/>
+        <result column="weekly_hours" property="weeklyHours"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT * FROM course ORDER BY id
+    </select>
+
+    <select id="findById" resultMap="BaseResultMap">
+        SELECT * FROM course WHERE id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.school.scheduling.entity.Course" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO course (course_name, course_code, weekly_hours)
+        VALUES (#{courseName}, #{courseCode}, #{weeklyHours})
+    </insert>
+
+    <update id="update" parameterType="com.school.scheduling.entity.Course">
+        UPDATE course
+        <set>
+            <if test="courseName != null">course_name = #{courseName},</if>
+            <if test="courseCode != null">course_code = #{courseCode},</if>
+            <if test="weeklyHours != null">weekly_hours = #{weeklyHours},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM course WHERE id = #{id}
+    </delete>
+
+    <select id="findCoursesByTeacherId" resultMap="BaseResultMap">
+        SELECT c.* FROM course c
+        INNER JOIN teacher_course tc ON c.id = tc.course_id
+        WHERE tc.teacher_id = #{teacherId}
+        ORDER BY c.id
+    </select>
+</mapper>

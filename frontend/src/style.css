@@ -1,0 +1,131 @@
+/* 全局样式 */
+:root {
+  --primary-color: #409EFF;
+  --success-color: #67C23A;
+  --warning-color: #E6A23C;
+  --danger-color: #F56C6C;
+  --info-color: #909399;
+}
+
+body {
+  background-color: #f0f2f5;
+}
+
+/* 登录页样式 */
+.login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+.login-box {
+  width: 420px;
+  padding: 40px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.login-title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 24px;
+  font-weight: bold;
+}
+.login-tip {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 13px;
+  color: #999;
+  line-height: 1.8;
+}
+
+/* 布局样式 */
+.layout-container { height: 100vh; display: flex; flex-direction: column; }
+.layout-header {
+  height: 60px;
+  background: linear-gradient(90deg, #1e3a8a 0%, #3b82f6 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  z-index: 10;
+}
+.layout-header .logo { font-size: 20px; font-weight: bold; flex: 1; display: flex; align-items: center; gap: 10px; }
+.layout-header .user-info { display: flex; align-items: center; gap: 12px; font-size: 14px; }
+
+.layout-body { display: flex; flex: 1; overflow: hidden; }
+.layout-aside {
+  width: 220px;
+  background: #001529;
+  overflow-y: auto;
+}
+.layout-main { flex: 1; padding: 20px; overflow-y: auto; background: #f0f2f5; }
+
+/* 页面卡片 */
+.page-card { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.page-title { font-size: 18px; font-weight: 600; color: #333; }
+
+/* 课表表格 */
+.schedule-table { width: 100%; border-collapse: collapse; }
+.schedule-table th, .schedule-table td {
+  border: 1px solid #ebeef5;
+  padding: 8px;
+  text-align: center;
+  vertical-align: middle;
+  min-width: 100px;
+  height: 70px;
+  font-size: 13px;
+}
+.schedule-table th {
+  background: #f5f7fa;
+  color: #333;
+  font-weight: 600;
+}
+.schedule-cell {
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  line-height: 1.6;
+}
+.schedule-cell:hover {
+  background: #ecf5ff;
+  box-shadow: inset 0 0 0 2px #409EFF;
+}
+.schedule-cell .course-name { font-weight: 600; color: #409EFF; font-size: 14px; }
+.schedule-cell .teacher-name { color: #666; font-size: 12px; }
+.schedule-cell .classroom { color: #999; font-size: 12px; }
+.schedule-cell.empty { color: #ccc; cursor: default; }
+.schedule-cell.empty:hover { background: white; box-shadow: none; }
+.schedule-cell.status-ADJUSTED { background: #fdf6ec; }
+.schedule-cell.status-ADJUSTED .course-name { color: #E6A23C; }
+
+/* Dashboard */
+.dashboard-welcome {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 30px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.dashboard-welcome h2 { margin-bottom: 10px; font-size: 24px; }
+.stat-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px; }
+.stat-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.stat-icon { width: 50px; height: 50px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; }
+.stat-icon.blue { background: #409EFF; }
+.stat-icon.green { background: #67C23A; }
+.stat-icon.orange { background: #E6A23C; }
+.stat-icon.purple { background: #9b59b6; }
+.stat-info .num { font-size: 24px; font-weight: bold; color: #333; }
+.stat-info .label { font-size: 13px; color: #999; }

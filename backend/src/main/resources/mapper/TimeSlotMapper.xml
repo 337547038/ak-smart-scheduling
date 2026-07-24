@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.school.scheduling.mapper.TimeSlotMapper">
+    <resultMap id="BaseResultMap" type="com.school.scheduling.entity.TimeSlot">
+        <id column="id" property="id"/>
+        <result column="slot_name" property="slotName"/>
+        <result column="day_of_week" property="dayOfWeek"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT * FROM time_slot ORDER BY day_of_week, slot_name
+    </select>
+
+    <select id="findById" resultMap="BaseResultMap">
+        SELECT * FROM time_slot WHERE id = #{id}
+    </select>
+
+    <select id="findByDayOfWeek" resultMap="BaseResultMap">
+        SELECT * FROM time_slot WHERE day_of_week = #{dayOfWeek} ORDER BY slot_name
+    </select>
+
+    <insert id="insert" parameterType="com.school.scheduling.entity.TimeSlot" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO time_slot (slot_name, day_of_week, start_time, end_time)
+        VALUES (#{slotName}, #{dayOfWeek}, #{startTime}, #{endTime})
+    </insert>
+
+    <update id="update" parameterType="com.school.scheduling.entity.TimeSlot">
+        UPDATE time_slot
+        <set>
+            <if test="slotName != null">slot_name = #{slotName},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM time_slot WHERE id = #{id}
+    </delete>
+</mapper>

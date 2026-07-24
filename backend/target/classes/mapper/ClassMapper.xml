@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.school.scheduling.mapper.ClassMapper">
+    <resultMap id="BaseResultMap" type="com.school.scheduling.entity.ClassInfo">
+        <id column="id" property="id"/>
+        <result column="class_name" property="className"/>
+        <result column="grade" property="grade"/>
+        <result column="student_count" property="studentCount"/>
+        <result column="head_teacher_id" property="headTeacherId"/>
+        <result column="head_teacher_name" property="headTeacherName"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT c.*, u.real_name as head_teacher_name
+        FROM class c LEFT JOIN user u ON c.head_teacher_id = u.id
+        ORDER BY c.grade, c.class_name
+    </select>
+
+    <select id="findById" resultMap="BaseResultMap">
+        SELECT c.*, u.real_name as head_teacher_name
+        FROM class c LEFT JOIN user u ON c.head_teacher_id = u.id
+        WHERE c.id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.school.scheduling.entity.ClassInfo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO class (class_name, grade, student_count, head_teacher_id)
+        VALUES (#{className}, #{grade}, #{studentCount}, #{headTeacherId})
+    </insert>
+
+    <update id="update" parameterType="com.school.scheduling.entity.ClassInfo">
+        UPDATE class
+        <set>
+            <if test="className != null">class_name = #{className},</if>
+            <if test="grade != null">grade = #{grade},</if>
+            <if test="studentCount != null">student_count = #{studentCount},</if>
+            <if test="headTeacherId != null">head_teacher_id = #{headTeacherId},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM class WHERE id = #{id}
+    </delete>
+</mapper>

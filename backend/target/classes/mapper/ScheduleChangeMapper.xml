@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.school.scheduling.mapper.ScheduleChangeMapper">
+    <resultMap id="BaseResultMap" type="com.school.scheduling.entity.ScheduleChange">
+        <id column="id" property="id"/>
+        <result column="schedule_id" property="scheduleId"/>
+        <result column="old_time_slot_id" property="oldTimeSlotId"/>
+        <result column="old_time_slot_info" property="oldTimeSlotInfo"/>
+        <result column="new_time_slot_id" property="newTimeSlotId"/>
+        <result column="new_time_slot_info" property="newTimeSlotInfo"/>
+        <result column="new_teacher_id" property="newTeacherId"/>
+        <result column="new_teacher_name" property="newTeacherName"/>
+        <result column="change_type" property="changeType"/>
+        <result column="change_reason" property="changeReason"/>
+        <result column="operator_id" property="operatorId"/>
+        <result column="operator_name" property="operatorName"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT sc.*, 
+               CONCAT_WS(' ', 
+                   CASE ts_old.day_of_week 
+                       WHEN 1 THEN '周一' WHEN 2 THEN '周二' WHEN 3 THEN '周三' 
+                       WHEN 4 THEN '周四' WHEN 5 THEN '周五' WHEN 6 THEN '周六' WHEN 7 THEN '周日'
+                   END, 
+                   ts_old.slot_name
+               ) as old_time_slot_info,
+               CONCAT_WS(' ', 
+                   CASE ts_new.day_of_week 
+                       WHEN 1 THEN '周一' WHEN 2 THEN '周二' WHEN 3 THEN '周三' 
+                       WHEN 4 THEN '周四' WHEN 5 THEN '周五' WHEN 6 THEN '周六' WHEN 7 THEN '周日'
+                   END, 
+                   ts_new.slot_name
+               ) as new_time_slot_info,
+               u.real_name as operator_name,
+               ut.real_name as new_teacher_name
+        FROM schedule_change sc
+        LEFT JOIN time_slot ts_old ON sc.old_time_slot_id = ts_old.id
+        LEFT JOIN time_slot ts_new ON sc.new_time_slot_id = ts_new.id
+        LEFT JOIN user u ON sc.operator_id = u.id
+        LEFT JOIN user ut ON sc.new_teacher_id = ut.id
+        ORDER BY sc.create_time DESC
+    </select>
+
+    <select id="findByScheduleId" resultMap="BaseResultMap">
+        SELECT sc.*, u.real_name as operator_name
+        FROM schedule_change sc LEFT JOIN user u ON sc.operator_id = u.id
+        WHERE sc.schedule_id = #{scheduleId}
+        ORDER BY sc.create_time DESC
+    </select>
+
+    <insert id="insert" parameterType="com.school.scheduling.entity.ScheduleChange" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO schedule_change (schedule_id, old_time_slot_id, new_time_slot_id, new_teacher_id, 
+                                     change_type, change_reason, operator_id)
+        VALUES (#{scheduleId}, #{oldTimeSlotId}, #{newTimeSlotId}, #{newTeacherId}, 
+                #{changeType}, #{changeReason}, #{operatorId})
+    </insert>
+</mapper>
