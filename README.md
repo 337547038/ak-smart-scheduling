@@ -2,6 +2,9 @@
 
 基于 Vue3 + Vite + Element-Plus + Spring Boot + MyBatis + MySQL 的智能排课系统。
 
+## 在线体验
+https://337547038.github.io/ak-smart-scheduling
+
 ## 技术栈
 
 ### 前端

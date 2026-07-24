@@ -13,7 +13,7 @@ service.interceptors.request.use(
     if (token) {
       config.headers['Authorization'] = 'Bearer ' + token
     }
-    config.url=config.url+'.json'
+    //config.url=config.url+'.json'
     return config
   },
   error => {
