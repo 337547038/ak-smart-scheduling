@@ -1,5 +1,7 @@
 # 智能排课系统
 
+面向中小学的智能自/手动排课软件，支持拖拽排课、冲突实时检测、禁止排课约束、多学期/多班级管理，以及 Excel / PDF 课表导出
+
 基于 Vue3 + Vite + Element-Plus + Spring Boot + MyBatis + MySQL 的智能排课系统。
 
 ## 在线体验
