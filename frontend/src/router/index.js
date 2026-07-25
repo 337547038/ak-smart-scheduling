@@ -3,12 +3,6 @@ import { useUserStore } from '@/stores/user'
 
 const routes = [
   {
-    path: '/login1',
-    name: 'login',
-    component: () => import('@/views/Login.vue'),
-    meta: { title: '测试' }
-  },
-  {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/Login.vue'),
@@ -80,7 +74,7 @@ router.beforeEach((to, from, next) => {
   const userStore = useUserStore()
   document.title = to.meta.title ? `${to.meta.title} - 智能排课系统` : '智能排课系统'
 
-  /*if (to.path === '/login') {
+  if (to.path === '/login') {
     if (userStore.isLoggedIn) {
       next('/')
     } else {
@@ -96,7 +90,7 @@ router.beforeEach((to, from, next) => {
   if (to.meta.roles && !to.meta.roles.includes(userStore.userInfo.role)) {
     next('/dashboard')
     return
-  }*/
+  }
 
   next()
 })
