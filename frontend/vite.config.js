@@ -12,6 +12,18 @@ export default defineConfig({
   base: './',
   build: {
     outDir: '../docs',
+    rolldownOptions:{
+      output:{
+        chunkFileNames: (info) => {
+         //以_开头的js，在github里获取不到，这里统一添加js
+          if (info.name.indexOf('_') === 0) {
+            return 'assets/js[name]-[hash].js'
+          } else {
+            return 'assets/[name]-[hash].js'
+          }
+        }
+      }
+    }
   },
   server: {
     port: 5173,
